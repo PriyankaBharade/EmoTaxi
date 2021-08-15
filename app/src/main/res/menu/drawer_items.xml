@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navProfile"
+            android:icon="@drawable/ic_baseline_account_circle_24"
+            android:iconTint="@color/white"
+            android:title="@string/profile" />
+        <!--  <item
+              android:id="@+id/navAddCard"
+              android:title="@string/add_card_str" />-->
+        <item
+            android:id="@+id/english"
+            android:icon="@drawable/ic_baseline_language_24"
+            android:iconTint="@color/white"
+            android:title="@string/select_language" />
+        <item
+            android:id="@+id/french"
+            android:icon="@drawable/ic_baseline_language_24"
+            android:iconTint="@color/white"
+            android:visible="false"
+            android:title="@string/french" />
+        <item
+            android:id="@+id/privacy"
+            android:icon="@drawable/ic_baseline_policy_24"
+            android:iconTint="@color/white"
+            android:title="@string/privacy_policy" />
+        <!--  <item
+              android:id="@+id/navSetting"
+              android:title="Setting" />-->
+    </group>
+</menu>

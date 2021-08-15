@@ -1,0 +1,84 @@
+com/emotaxi/model/AddCardModel.java
+ com.emotaxi.model.AddCardModel
+ com.emotaxi.model.AddCardModel$Data
+ com.emotaxi.model.AddCardModel$Version
+com/emotaxi/model/CancelBookingModel.java
+ com.emotaxi.model.CancelBookingModel
+ com.emotaxi.model.CancelBookingModel$Version
+com/emotaxi/model/CheckoutModel.java
+ com.emotaxi.model.CheckoutModel
+ com.emotaxi.model.CheckoutModel$Address
+ com.emotaxi.model.CheckoutModel$BillingDetails
+ com.emotaxi.model.CheckoutModel$Card
+ com.emotaxi.model.CheckoutModel$Checks
+ com.emotaxi.model.CheckoutModel$Data
+ com.emotaxi.model.CheckoutModel$Metadata
+ com.emotaxi.model.CheckoutModel$Outcome
+ com.emotaxi.model.CheckoutModel$PaymentMethodDetails
+ com.emotaxi.model.CheckoutModel$Refunds
+ com.emotaxi.model.CheckoutModel$Response
+ com.emotaxi.model.CheckoutModel$Source
+ com.emotaxi.model.CheckoutModel$Version
+com/emotaxi/model/GetProfileModel.java
+ com.emotaxi.model.GetProfileModel
+ com.emotaxi.model.GetProfileModel$Datum
+com/emotaxi/model/CourseModel.java
+ com.emotaxi.model.CourseModel
+ com.emotaxi.model.CourseModel$Adresse
+ com.emotaxi.model.CourseModel$Adresse_
+ com.emotaxi.model.CourseModel$DestinationLocation
+ com.emotaxi.model.CourseModel$Geo
+ com.emotaxi.model.CourseModel$Geo_
+ com.emotaxi.model.CourseModel$Location
+com/emotaxi/model/CreateCustomer.java
+ com.emotaxi.model.CreateCustomer
+ com.emotaxi.model.CreateCustomer$Data
+ com.emotaxi.model.CreateCustomer$Version
+com/emotaxi/widget/DataManager.java
+ com.emotaxi.widget.DataManager
+com/emotaxi/model/CardListModel.java
+ com.emotaxi.model.CardListModel
+ com.emotaxi.model.CardListModel$Cardinfo
+ com.emotaxi.model.CardListModel$Datum
+ com.emotaxi.model.CardListModel$Version
+com/emotaxi/model/SignUpModel.java
+ com.emotaxi.model.SignUpModel
+ com.emotaxi.model.SignUpModel$Datum
+ com.emotaxi.model.SignUpModel$Version
+com/emotaxi/widget/FileUtils.java
+ com.emotaxi.widget.FileUtils
+ com.emotaxi.widget.FileUtils$1
+ com.emotaxi.widget.FileUtils$2
+ com.emotaxi.widget.FileUtils$3
+com/emotaxi/model/VehicleListModel.java
+ com.emotaxi.model.VehicleListModel
+ com.emotaxi.model.VehicleListModel$Vehicle
+com/emotaxi/model/TokenModel.java
+ com.emotaxi.model.TokenModel
+ com.emotaxi.model.TokenModel$Data
+ com.emotaxi.model.TokenModel$Version
+com/emotaxi/retrofit/CustomInfoWindowAdapter.java
+ com.emotaxi.retrofit.CustomInfoWindowAdapter
+com/emotaxi/model/RefundModel.java
+ com.emotaxi.model.RefundModel
+ com.emotaxi.model.RefundModel$Data
+ com.emotaxi.model.RefundModel$Version
+com/emotaxi/widget/LocaleHelper.java
+ com.emotaxi.widget.LocaleHelper
+com/emotaxi/model/EstimationModel.java
+ com.emotaxi.model.EstimationModel
+ com.emotaxi.model.EstimationModel$Trip
+com/emotaxi/BuildConfig.java
+ com.emotaxi.BuildConfig
+com/emotaxi/model/BookingDetailsModel.java
+ com.emotaxi.model.BookingDetailsModel
+ com.emotaxi.model.BookingDetailsModel$VehiculeGeo
+com/emotaxi/drawPath/DownloadTask.java
+ com.emotaxi.drawPath.DownloadTask
+ com.emotaxi.drawPath.DownloadTask$1
+ com.emotaxi.drawPath.DownloadTask$DirectionsJSONParser
+ com.emotaxi.drawPath.DownloadTask$ParserTask
+com/emotaxi/widget/LocalStorageProvider.java
+ com.emotaxi.widget.LocalStorageProvider
+com/emotaxi/model/BookingModel.java
+ com.emotaxi.model.BookingModel

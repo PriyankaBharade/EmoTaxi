@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EmoTaxi</string>
+
+    <string name="hi_where_you_would_like_to_go">Salut où aimeriez vous aller?</string>
+
+    <string name="current_location">Localisation Actuelle</string>
+
+    <string name="enter_your_destination">Entrer Votre Destination?</string>
+
+    <string name="cancel">Annuler</string>
+
+    <string name="swipe_to_pay">Glisser pour procéder au paiement</string>
+    **We need to change the english version for ''Swipe to proceed to paiement''
+
+    <string name="hello_blank_fragment">Salut blank fragment</string>
+
+    <string name="name_on_card">Nom sur la carte</string>
+
+    <string name="phone_number">Numéro de Téléphone</string>
+
+    <string name="card_number">Numéro de Votre Carte</string>
+
+    <string name="yy_mm">YY/MM</string>
+
+    <string name="cvv">cvv</string>
+
+    <string name="remember_me">Sauvegarder mes Informations</string>
+
+    <string name="yes">Oui</string>
+
+    <string name="no">Non</string>
+
+    <string name="you_want_to_call_819_684_7777">Vous voulez appellé la répartition aux 819-684-7777 ?</string>
+    ** You want to call the operator 819-684-7777
+
+    <string name="enter_name">Entrer Votre Nom</string>
+
+    <string name="enter_phone_number">Entrer Votre Numéro de Téléphone</string>
+
+    <string name="enter_password">Entrer Votre Mot de Passe</string>
+
+    <string name="save">Sauvegarder</string>
+
+    <string name="profile">Profil</string>
+
+    <string name="add_card_str">Ajouter une Carte</string>
+
+    <string name="time">Later</string>
+    ''Plus tard''
+
+    <string name="booking_completed">Reservation Réussie</string>
+
+    <string name="booking_id">Identification de la reservation</string>
+
+    <string name="vehicule">véhicule</string>
+
+    <string name="distance">Distance</string>
+
+    <string name="eta">Temps d arriver</string>
+
+    <string name="booking_status">Status de réservation</string>
+
+    <string name="reset">Arrêter le suivi</string>
+
+    <string name="are_you_sure">Êtes-vous sure de vouloir annuler?</string>
+
+    <string name="_5_fee_will_still_be_applied">5$ de frais seront toujour appliqués</string>
+
+    <string name="hey_cancel_is_only_available_n_before_your_ride_arrive">He, lannulation nest disponible quavant \n l arrivée de votre taxi.</string>
+
+    <string name="email_address">Adresse e-mail</string>
+
+    <string name="english">Anglais</string>
+
+    <string name="french">Français</string>
+
+    <string name="privacy_policy">politique de confidentialité</string>
+    <string name="average_price">Prix moyen</string>
+    <string name="your_emo_price">Votre prix Emo</string>
+    <string name="swipe_to_confirm">Faites glisser pour confirmer</string>
+    <string name="pay">Payer</string>
+
+    <string name="mobile_number">Mobile Number</string>
+    <string name="signup">SignUp</string>
+    <string name="skip">SKIP</string>
+    <string name="verify_otp">Verify Otp</string>
+    <string name="expirationn_date">Expirationn Date</string>
+    <string name="_5">5 $</string>
+    <string name="_10">10 $</string>
+    <string name="_15">15 $</string>
+    <string name="_20">20 $</string>
+
+    <string name="get_started">Get Started</string>
+    <string name="welcome_to_emotaxi">Welcome To EmoTaxi</string>
+    <string name="enter_your_phone_number_to_start_booking_with_us">Enter your phone number to start booking with us</string>
+    <string name="a_sms_will_be_sent_to_validate_your_phone_number">A SMS will be sent to validate your phone number</string>
+
+    <string name="ton_taxi_payment_method">Ton Taxi Payment Method</string>
+    <string name="no_record_found">No record found</string>
+    <string name="business_account">Business Account</string>
+    <string name="select_language">Select Language</string>
+
+</resources>
