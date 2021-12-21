@@ -6,10 +6,10 @@ class Constant {
         val Splash: String = "Splash"
         val PaymentDialog: String = "PaymentDialog"
         val CustomerId: String = "customer_id"
-        var serverUrl: String =
+        var serverUrlNew: String =
             "https://taxiaylmer.ddns.fraxion.com:8063/Webservice_Repartition/Service_Repartition/v1/"
-       /* var serverUrlNew: String =
-            "http://taxiaylmer.ddns.fraxion.com:8061/Webservice_Repartition/Service_Repartition/v1/"*/
+        var serverUrl: String =
+            "http://taxiaylmer.ddns.fraxion.com:8061/Webservice_Repartition/Service_Repartition/v1/"
         var serverUrlorg1: String = "http://phssdhar.com/stripe/index.php/webservices_bazaar/"
         var serverUrl1: String = "http://phssdhar.com/stripe/stripe_test/index.php/webservices_bazaar/"
         var booking_id: String = "booking_id"
@@ -22,7 +22,7 @@ class Constant {
         var cvc: String = "cvc"
         var postal: String = "postal"
         val token: String =  "token"
-        val language: String =  "en"
+        val language: String =  "language"
         val USER_DATA: String =  "user_data"
         val Price: String =  "price"
         val PickUpLatitude: String =  "pick_up_latitude"

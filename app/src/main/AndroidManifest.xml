@@ -9,17 +9,19 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <uses-feature android:name="android.hardware.location.gps" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/new_splash"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/new_splash"
         android:supportsRtl="true"
         android:theme="@style/Theme.EmoTaxi"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SelectLanguageActivity"/>
+        <activity android:name=".SelectLanguageActivity" />
         <activity android:name=".AddCardActivity" />
         <activity android:name=".GetStartedActivity" />
         <activity android:name=".OtpVerificationActivity" />
@@ -33,10 +35,10 @@
         <activity android:name=".MainActivity" />
         <activity
             android:name=".SplashActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

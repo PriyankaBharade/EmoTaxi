@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,7 +14,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp">
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp">
 
             <ImageView
                 android:id="@+id/image_back"
@@ -24,7 +25,6 @@
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
                 android:background="@drawable/swipe_to_btn"
-                android:padding="10dp"
                 android:rotation="180"
                 android:src="@mipmap/right_arrow"
                 app:tint="@color/white"
@@ -38,7 +38,7 @@
                 android:layout_centerVertical="true"
                 android:fontFamily="sans-serif-black"
                 android:padding="10dp"
-                android:text="Save"
+                android:text="@string/save"
                 android:textColor="@color/purple_500" />
         </RelativeLayout>
 
@@ -48,12 +48,12 @@
             android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-black"
             android:padding="10dp"
-            android:text="Add a Card"
+            android:text="@string/add_card_str"
             android:textColor="@color/black" />
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:src="@mipmap/card_dummy" />
@@ -65,7 +65,7 @@
             android:layout_marginTop="15dp"
             android:fontFamily="sans-serif"
             android:padding="10dp"
-            android:text="CARD INFORMATION"
+            android:text="@string/card_information"
             android:textColor="@color/grey" />
 
         <EditText
@@ -80,14 +80,14 @@
             android:drawableTint="@color/grey"
             android:hint="@string/name_on_card"
             android:padding="10dp"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/input_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/grey_stroke_border"
@@ -98,7 +98,8 @@
             android:inputType="phone"
             android:maxLength="10"
             android:padding="10dp"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:visibility="gone" />
 
 
         <com.stripe.android.view.CardMultilineWidget
@@ -115,7 +116,7 @@
             android:layout_marginTop="15dp"
             android:fontFamily="sans-serif"
             android:padding="10dp"
-            android:text="E-MAIL FOR RECEIPT"
+            android:text="@string/e_mail_for_receipt"
             android:textColor="@color/grey" />
 
         <EditText

@@ -11,15 +11,22 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Gravity
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.view.animation.Animation
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.emotaxi.adapter.CardListAdapter
 import com.emotaxi.adapter.CardSelectionAdapter
 import com.emotaxi.drawPath.DownloadTask
 import com.emotaxi.model.BookingDetailsModel
@@ -27,9 +34,9 @@ import com.emotaxi.model.CardListModel
 import com.emotaxi.model.RefundModel
 import com.emotaxi.retrofit.*
 import com.emotaxi.utils.AnimationUtils
-import com.emotaxi.utils.SessionManager
 import com.emotaxi.widget.CustomDialogProgress
 import com.emotaxi.widget.DataManager
+import com.emotaxi.widget.SessionManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
@@ -78,23 +85,35 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_booking_details)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        latitude = intent.getDoubleExtra("latitude", 0.0)
-        longitude = intent.getDoubleExtra("longitude", 0.0)
+        latitude = intent.getStringExtra("latitude")!!.toDouble()
+        longitude = intent.getStringExtra("longitude")!!.toDouble()
         price = intent.getStringExtra("price").toString()
         // email = intent.getStringExtra("email").toString()
+        Log.e("Location lat Long is", latitude.toString() + "  " + longitude.toString())
         val mapFragment =
             supportFragmentManager.findFragmentById(R.id.googleMap) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
+//        val locationButton = (mapFragment.view?.findViewById<View>(Integer.parseInt("1"))?.parent as View)
+//            .findViewById<View>(Integer.parseInt("2"))
+//        val rlp =  locationButton.getLayoutParams() as RelativeLayout.LayoutParams
+//        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0)
+//        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE)
+//        rlp.setMargins(0, 0, 30, 30)
         btn_reset.text = "Cancel Booking"
         btn_reset!!.setOnClickListener {
-            if (btn_reset.text.toString() == "Cancel Booking") {
-               cancelBookingDialog()
-            } else {
+            // if (btn_reset.text.toString() == "Cancel Booking") {
+            cancelBookingDialog()
+            /*} else {
                 BookingTip()
-            }
+            }*/
         }
         image_back.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
+        }
+
+        imgCall?.setOnClickListener {
+            dialogCall()
         }
         //getCourse()
     }
@@ -103,8 +122,7 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
         customDialogProgress = CustomDialogProgress(this@BookingDetailsActivity)
         customDialogProgress?.show()
         Toast.makeText(
-            this@BookingDetailsActivity, "Price $price"
-            , Toast.LENGTH_SHORT
+            this@BookingDetailsActivity, "Price $price", Toast.LENGTH_SHORT
         ).show()
         var price_return: Double? = null
         price_return = if (price.contains(",")) {
@@ -185,7 +203,7 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
                 Constant.booking_id,
                 ""
             )
-      //  Log.e("Cancel Booking request", url)
+        //  Log.e("Cancel Booking request", url)
         // + "&message=" + "cancel booking" + "&desactive_callback" + true
         WebServiceClient?.client.create(BackEndApi::class.java)
             .coursedelete(
@@ -204,11 +222,7 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
                             "Your booking cancelled",
                             Toast.LENGTH_SHORT
                         ).show()
-                        SessionManager.writeString(
-                            applicationContext,
-                            Constant.booking_id,
-                            ""
-                        )
+                        removeDataFromSession()
                         startActivity(
                             Intent(
                                 this@BookingDetailsActivity,
@@ -235,6 +249,23 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
             })
     }
 
+    private fun removeDataFromSession() {
+        SessionManager.writeString(
+            applicationContext,
+            Constant.booking_id,
+            ""
+        )
+        SessionManager.writeString(
+            applicationContext,
+            Constant.PickUpLatitude,
+            ""
+        )
+        SessionManager.writeString(
+            applicationContext,
+            Constant.PickUpLongitude,
+            ""
+        )
+    }
 
     fun cancelBookingDialog() {
         var dialog = Dialog(this)
@@ -247,9 +278,8 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
         }
 
         tv_yes.setOnClickListener {
-            bookingcancel()
-            //  BookingTip()
-            // cancelBooking()
+            cancelBookingFraxionAPICall()
+            // bookingcancel()
             dialog.dismiss()
         }
         dialog.show()
@@ -277,20 +307,22 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
             }
         }
         btn_no.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java));
-            finish()
+            // startActivity(Intent(this, MainActivity::class.java));
+            // finish()
+            cancelBookingFraxionAPICall()
         }
         btn_yes.setOnClickListener {
+            cancelBookingFraxionAPICall()
             if (tip_amount != null && cardinfo != null) {
-                checkout("", "", "1", cardinfo?.id.toString())
-            }else{
-                Toast.makeText(this,"Please select the Tip Amount and Card",Toast.LENGTH_SHORT).show()
+                // checkout("", "", "1", cardinfo?.id.toString())
+            } else {
+                Toast.makeText(this, "Please select the Tip Amount and Card", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
         getCardOnStripe()
         dialog.show()
     }
-
 
     fun checkout(token: String, bookingId: String, type: String, card_id: String) {
         var customDialogProgress = CustomDialogProgress(this)
@@ -319,7 +351,6 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
                     response: Response<JsonObject>
                 ) {
                     customDialogProgress?.dismiss()
-                    //  alert(response!!.body().toString())
                     val gson: JsonObject =
                         JsonParser().parse(response.body().toString()).getAsJsonObject()
                     val jsonObject = JSONObject(gson.toString())
@@ -331,13 +362,14 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
                                 && jsonObject.optJSONObject("data").optJSONObject("response")
                                     .optString("id") != null
                             ) {
-                                startActivity(
-                                    Intent(
-                                        this@BookingDetailsActivity,
-                                        MainActivity::class.java
-                                    )
-                                )
-                                finish()
+                                cancelBookingFraxionAPICall()
+//                                startActivity(
+//                                    Intent(
+//                                        this@BookingDetailsActivity,
+//                                        MainActivity::class.java
+//                                    )
+//                                )
+//                                finish()
                             }
                         } else {
                             alert(jsonObject.optString("message"))
@@ -360,7 +392,6 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
                 }
             })
     }
-
 
     fun getCardOnStripe() {
         var hashmap = HashMap<String, String>()
@@ -455,7 +486,7 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
                                     )
                                 )
                             val cameraUpdate: CameraUpdate =
-                                CameraUpdateFactory.newLatLngBounds(builder.build(), 0)
+                                CameraUpdateFactory.newLatLngBounds(builder.build(), 300)
                             mMap!!.moveCamera(cameraUpdate)
                         }
                     } else {
@@ -498,11 +529,32 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
                         tv_vehicle_id.text =
                             getString(R.string.vehicule) + ":- " + response.body()!!.vehiculeId
                         tv_booking_status.text = response.body()!!.status
+                        if (response.body()!!.status == "A_Repartir") {
+                            tv_vehicle_desc.text =
+                                getString(R.string.hey_cancel_is_only_available_n_before_your_ride_arrive)
+                            imgCall.visibility = View.VISIBLE
+                        } else if (response.body()!!.status == "Termine") {
+                            removeDataFromSession()
+                            startActivity(
+                                Intent(
+                                    this@BookingDetailsActivity,
+                                    MainActivity::class.java
+                                )
+                            )
+                            finish()
+                        } else {
+                            tv_vehicle_desc.text = getString(R.string.your_vehicle_is_on_way)
+                            // ll_booking_decs.visibility = View.GONE
+                        }
                         if (response.body()!!.status == "A_Repartir"
                             || response.body()!!.status == "Vehicule_Confirme"
                         ) {
                             btn_reset.text = "Cancel Booking"
                         } else {
+                            /*if (!ll_booking_decs.isVisible) {
+                                ll_booking_decs.visibility = View.VISIBLE
+                            }*/
+                            imgCall.visibility = View.GONE
                             btn_reset.text = getString(R.string.reset)
                         }
                         if (checkmarker) {
@@ -512,8 +564,12 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
                                     response!!.body()!!.vehiculeGeo!!.longitude!!.toDouble()
                                 )
                             }
+                            if (!call_driver_card.isVisible) {
+                                call_driver_card.visibility = View.VISIBLE
+                                ll_booking_decs.visibility = View.VISIBLE
+                            }
                         } else {
-                           // addSourcemarkerInfo()
+                            // addSourcemarkerInfo()
                             if (response!!.body()!!.vehiculeGeo != null) {
                                 addDestinationmarkerInfoWindow(
                                     response!!.body()!!.vehiculeGeo!!.latitude!!.toDouble(),
@@ -536,7 +592,7 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
                                         )
                                     )
                                 val cameraUpdate: CameraUpdate =
-                                    CameraUpdateFactory.newLatLngBounds(builder.build(), 50)
+                                    CameraUpdateFactory.newLatLngBounds(builder.build(), 300)
                                 mMap!!.moveCamera(cameraUpdate)
                             }
                         }
@@ -569,7 +625,6 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
         val downloadTask = DownloadTask(mMap, this)
         downloadTask.execute(url)
     }
-
 
     private fun addSourcemarkerInfo() {
         var valueMap1 = MarkerOptions()
@@ -620,6 +675,8 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
+        Toast.makeText(this, latitude.toString() + " " + longitude.toString(), Toast.LENGTH_SHORT)
+            .show()
         mMap = googleMap
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -639,9 +696,11 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
             return
         }
         mMap!!.isMyLocationEnabled = true
+        val cameraUpdate: CameraUpdate =
+            CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), 60f)
+        mMap!!.animateCamera(cameraUpdate)
         getCourse()
         // checkPermission()
-
     }
 
     override fun onGoogleResponseListener(distance: String, time: String) {
@@ -739,7 +798,11 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
         valueAnimator.start()
     }
 
-    override fun onCloseListener(cardinfo: CardListModel.Cardinfo, clickOnView: Boolean , position : Int) {
+    override fun onCloseListener(
+        cardinfo: CardListModel.Cardinfo,
+        clickOnView: Boolean,
+        position: Int
+    ) {
         this.cardinfo = cardinfo
     }
 
@@ -753,5 +816,52 @@ class BookingDetailsActivity : AppCompatActivity(), OnMapReadyCallback,
         alert.show()
     }
 
+    private fun dialogCall() {
+        var dialog = Dialog(this)
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.call_dialog)
+        dialog.setCancelable(false)
+        val window: Window = dialog.window!!
+        val wlp: WindowManager.LayoutParams = window.attributes
+        wlp.gravity = Gravity.TOP
+        wlp.flags = wlp.flags and WindowManager.LayoutParams.FLAG_DIM_BEHIND.inv()
+        window.attributes = wlp
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        val no: TextView = dialog.findViewById(R.id.no)
+        val yes: TextView = dialog.findViewById(R.id.yes)
+        val cardView: CardView = dialog.findViewById(R.id.cardView)
+        val rightSwipe: Animation =
+            android.view.animation.AnimationUtils.loadAnimation(this, R.anim.left_right)
+        cardView.startAnimation(rightSwipe)
+        main_layout!!.alpha = 0.5f
+        yes.setOnClickListener {
+            main_layout!!.alpha = 1f
+            dialog?.dismiss()
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:819-684-7777")
+            startActivity(intent)
+        }
 
+        no.setOnClickListener {
+            main_layout!!.alpha = 1f
+            var rightSwipe: Animation =
+                android.view.animation.AnimationUtils.loadAnimation(this, R.anim.right_left)
+            cardView.startAnimation(rightSwipe)
+            rightSwipe?.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation?) {
+
+                }
+
+                override fun onAnimationEnd(animation: Animation?) {
+                    dialog?.dismiss()
+                }
+
+                override fun onAnimationRepeat(animation: Animation?) {
+
+                }
+
+            })
+        }
+        dialog?.show()
+    }
 }

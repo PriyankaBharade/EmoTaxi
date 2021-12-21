@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:gravity="center_horizontal"
+            android:visibility="gone"
             android:text="@string/a_sms_will_be_sent_to_validate_your_phone_number"
             android:textColor="@color/black"
             android:textSize="12sp" />

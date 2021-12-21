@@ -10,14 +10,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import com.emotaxi.drawPath.DownloadTask
 import com.emotaxi.retrofit.Constant
 import com.emotaxi.retrofit.SetonGoogleDistanceListener
-import com.emotaxi.utils.SessionManager
 import com.emotaxi.widget.AddPaymentBottomSheetDialog
 import com.emotaxi.widget.CustomDialogProgress
+import com.emotaxi.widget.SessionManager
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
@@ -41,6 +42,7 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
     var longitudestr: String? = null
     var dlatitudestr: String? = null
     var dlongitudestr: String? = null
+    var carReachtime: String? = null
     var customDialogProgress: CustomDialogProgress? = null
 
     var tv_car_no: TextView? = null
@@ -50,6 +52,7 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
     var sourceAddress: String? = null
     var destinationAddress: String? = null
     var rl_swipe: RelativeLayout? = null
+    var distanceTime = ""
 
 
     companion object {
@@ -69,19 +72,21 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
         //   rl_main = findViewById(R.id.rl_main)
         // fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.googleMap)
-                as SupportMapFragment?
+        val mapFragment =
+            supportFragmentManager.findFragmentById(R.id.googleMap) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
         latitudestr = intent.getStringExtra("latitude")
         longitudestr = intent.getStringExtra("longitude")
         dlatitudestr = intent.getStringExtra("dlatitude")
         dlongitudestr = intent.getStringExtra("dlongitude")
+        carReachtime = intent.getStringExtra("carReachtime")
         sourceAddress = intent.getStringExtra("sourceAddress")
         destinationAddress = intent.getStringExtra("destinationAddress")
-       /* rl_swipe!!.setOnClickListener {
-            //  rl_main!!.alpha = 0.5f
-            AddPaymentBottomSheetDialog.newInstance("","").show(supportFragmentManager!!,"TAG")
-           *//* FragmentPaymentDialog.newInstance(
+        Log.e("Input Destination", destinationAddress + "new " + sourceAddress)
+        /* rl_swipe!!.setOnClickListener {
+             //  rl_main!!.alpha = 0.5f
+             AddPaymentBottomSheetDialog.newInstance("","").show(supportFragmentManager!!,"TAG")
+            *//* FragmentPaymentDialog.newInstance(
                 latitudestr!!,
                 longitudestr!!,
                 dlatitudestr!!,
@@ -95,14 +100,7 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
 
         swipe_button!!.setOnStateChangeListener {
             if (it) {
-                AddPaymentBottomSheetDialog.newInstance( latitudestr!!,
-                    longitudestr!!,
-                    dlatitudestr!!,
-                    dlongitudestr!!,
-                    sourceAddress!!,
-                    destinationAddress!!,
-                    tv_car_no!!.text.toString()!!).show(supportFragmentManager!!,"TAG")
-               /* FragmentPaymentDialog.newInstance(
+                 AddPaymentBottomSheetDialog.newInstance(
                     latitudestr!!,
                     longitudestr!!,
                     dlatitudestr!!,
@@ -110,7 +108,16 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
                     sourceAddress!!,
                     destinationAddress!!,
                     tv_car_no!!.text.toString()!!
-                ).show(supportFragmentManager!!, "TAG")*/
+                ).show(supportFragmentManager!!, "TAG")
+                /* FragmentPaymentDialog.newInstance(
+                     latitudestr!!,
+                     longitudestr!!,
+                     dlatitudestr!!,
+                     dlongitudestr!!,
+                     sourceAddress!!,
+                     destinationAddress!!,
+                     tv_car_no!!.text.toString()!!
+                 ).show(supportFragmentManager!!, "TAG")*/
             }
         }
 
@@ -153,6 +160,11 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
     private fun drawPath(url: String) {
         val downloadTask = DownloadTask(mMap, this)
         downloadTask.execute(url)
+    }
+
+    override fun onResume() {
+        Toast.makeText(this, "Call Resume funtion", Toast.LENGTH_SHORT).show()
+        super.onResume()
     }
 
 
@@ -247,7 +259,6 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
             LatLng(dlatitudestr!!.toDouble(), dlongitudestr!!.toDouble())
         )
         Log.e("Direction API Path", url)
-        addDestinationmarkerInfoWindow()
         // addSourcemarkerInfo()
         val width = resources.displayMetrics.widthPixels
         val height = resources.displayMetrics.heightPixels
@@ -258,7 +269,7 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
         builder.include(LatLng(latitudestr!!.toDouble(), longitudestr!!.toDouble()))
             .include(LatLng(dlatitudestr!!.toDouble(), dlongitudestr!!.toDouble()))
         val cameraUpdate: CameraUpdate =
-            CameraUpdateFactory.newLatLngBounds(builder.build(), width, height, 250)
+            CameraUpdateFactory.newLatLngBounds(builder.build(), width, height, 300)
         mMap!!.moveCamera(cameraUpdate)
     }
 
@@ -306,7 +317,7 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
           mMap!!.addMarker(valueMap)//.showInfoWindow()*/
         var spilt = destinationAddress!!.split(" ")
         var address1 = spilt[0]
-        var address2 = spilt[1] + " " +  spilt[2]
+        var address2 = spilt[1] + " " + spilt[2]
         var valueMap = MarkerOptions().position(
             LatLng(
                 dlatitudestr!!.toDouble(), dlongitudestr!!.toDouble()
@@ -338,7 +349,7 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
         var tv_arrive_time: TextView = customMarkerView.findViewById(R.id.tv_arrive_time)
         tv_address!!.text = address
         tv_add_num!!.text = knownName
-        tv_arrive_time!!.text = time.replace("mins", "")
+        tv_arrive_time!!.text = carReachtime!!.replace("mins", "")
         customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         customMarkerView.layout(
             18,
@@ -364,6 +375,7 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
         knownName: String,
         time: String
     ): Bitmap? {
+        Toast.makeText(this, distanceTime, Toast.LENGTH_SHORT).show()
         val customMarkerView =
             (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
                 R.layout.view_cutome_destination_marker,
@@ -374,10 +386,10 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
           markerImageView.setImageResource(resId)*/
         var tv_add_num: TextView = customMarkerView.findViewById(R.id.tv_add_num)
         var tv_address: TextView = customMarkerView.findViewById(R.id.tv_address)
-        // var tv_arrive_time : TextView = customMarkerView.findViewById(R.id.tv_arrive_time)
+        var tv_arrive_time: TextView = customMarkerView.findViewById(R.id.tv_arrive_time)
         tv_address!!.text = address
         tv_add_num!!.text = knownName
-        // tv_arrive_time!!.text = time
+        tv_arrive_time!!.text = distanceTime
         customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         customMarkerView.layout(
             18,
@@ -399,6 +411,8 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
 
     override fun onGoogleResponseListener(distance: String, time: String) {
         if (distance != null && distance != "" && time != null && time != "") {
+            distanceTime = time
+            addDestinationmarkerInfoWindow()
             tv_reach_time!!.text = distance
             var calculatedprice =
                 (distance.replace(" km", "").replace(" m", "").replace(",", "")
@@ -432,6 +446,7 @@ class ConfirmActivity : AppCompatActivity(), OnMapReadyCallback, SetonGoogleDist
     override fun onRestart() {
         super.onRestart()
         swipe_button.clearFocus()
+        Toast.makeText(this, "Call Restart funtion", Toast.LENGTH_SHORT).show()
     }
 
 

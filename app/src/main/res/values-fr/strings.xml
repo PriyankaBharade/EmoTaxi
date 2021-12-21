@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">EmoTaxi</string>
+    <string name="app_name">Ton Taxi</string>
 
     <string name="hi_where_you_would_like_to_go">Salut où aimeriez vous aller?</string>
 
@@ -67,7 +67,9 @@
 
     <string name="_5_fee_will_still_be_applied">5$ de frais seront toujour appliqués</string>
 
-    <string name="hey_cancel_is_only_available_n_before_your_ride_arrive">He, lannulation nest disponible quavant \n l arrivée de votre taxi.</string>
+    <!--<string name="hey_cancel_is_only_available_n_before_your_ride_arrive">He, lannulation nest disponible quavant \n l arrivée de votre taxi.</string>-->
+    <string name="hey_cancel_is_only_available_n_before_your_ride_arrive">Nous confirmons I appel avec la voiture la plus pret de vous. Contactez nous pour voir votre priorite d"'appel en cas de grand achalandage</string>
+    <string name="your_vehicle_is_on_way">Voiture est en chemin, svp garden I oeil ouvert.</string>
 
     <string name="email_address">Adresse e-mail</string>
 
@@ -76,14 +78,15 @@
     <string name="french">Français</string>
 
     <string name="privacy_policy">politique de confidentialité</string>
-    <string name="average_price">Prix moyen</string>
+    <string name="average_price">Prix eestime`</string>
     <string name="your_emo_price">Votre prix Emo</string>
-    <string name="swipe_to_confirm">Faites glisser pour confirmer</string>
+    <string name="swipe_to_confirm">Glisser pour confirmer</string>
+    <string name="confirm">Confirmer</string>
     <string name="pay">Payer</string>
 
     <string name="mobile_number">Mobile Number</string>
-    <string name="signup">SignUp</string>
-    <string name="skip">SKIP</string>
+    <string name="signup">Commencer</string>
+    <string name="skip">Commenrce reservation</string>
     <string name="verify_otp">Verify Otp</string>
     <string name="expirationn_date">Expirationn Date</string>
     <string name="_5">5 $</string>
@@ -92,13 +95,20 @@
     <string name="_20">20 $</string>
 
     <string name="get_started">Get Started</string>
-    <string name="welcome_to_emotaxi">Welcome To EmoTaxi</string>
-    <string name="enter_your_phone_number_to_start_booking_with_us">Enter your phone number to start booking with us</string>
+    <string name="welcome_to_emotaxi">Bienvenue a Ton Taxi</string>
+    <string name="enter_your_phone_number_to_start_booking_with_us">Confirme votre numero de telephone pour commencer a faire vos reservations</string>
     <string name="a_sms_will_be_sent_to_validate_your_phone_number">A SMS will be sent to validate your phone number</string>
 
-    <string name="ton_taxi_payment_method">Ton Taxi Payment Method</string>
-    <string name="no_record_found">No record found</string>
-    <string name="business_account">Business Account</string>
-    <string name="select_language">Select Language</string>
+    <string name="ton_taxi_payment_method">Méthode de paiement Ton Taxi</string>
+    <string name="no_record_found">Aucun enregistrement trouvé</string>
+    <string name="business_account">Compte d’entreprise</string>
+    <string name="select_language">Sélectionner une langue</string>
+    <string name="add_a_new_card">Add a new card</string>
+    <string name="follow_your_tracking">suive votre véhicule</string>
+    <string name="i_don_t_have_a_card_right_now_pay_the_regular_taxi_fair_in_the_cab">Payer dans le taxi \n (nous acceptons debit/credit/tap)</string>
+    <string name="card_information">INFORMATIONS SUR LA CARTE</string>
+    <string name="e_mail_for_receipt">E-MAIL POUR RÉCEPTION</string>
+    <string name="appeller_nous_pour_plus_d_aide">Appeller nous pour plus d\'aide</string>
+
 
 </resources>

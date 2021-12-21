@@ -16,11 +16,26 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="40dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/new_splash" />
+
+
+        <EditText
+            android:id="@+id/input_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/grey_stroke_border"
+            android:focusable="false"
+            android:hint="@string/mobile_number"
+            android:inputType="number"
+            android:maxLength="13"
+            android:padding="12dp" />
 
         <com.poovam.pinedittextfield.SquarePinField
             android:id="@+id/squareField"
@@ -30,6 +45,7 @@
             android:layout_marginTop="15dp"
             android:inputType="text"
             android:textSize="16sp"
+            android:visibility="gone"
             app:cornerRadius="10dp"
             app:noOfFields="4" />
 
@@ -41,7 +57,7 @@
             android:layout_marginTop="45dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/swipe_to_btn"
-            android:text="@string/verify_otp"
+            android:text="@string/confirm"
             android:textAllCaps="false"
             android:textColor="@color/white" />
     </LinearLayout>

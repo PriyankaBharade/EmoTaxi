@@ -13,22 +13,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <ImageView
+        android:id="@+id/image_back"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/swipe_to_btn"
+        android:padding="10dp"
+        android:rotation="180"
+        android:src="@mipmap/right_arrow"
+        app:tint="@color/white" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/image_back"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="20dp"
-            android:background="@drawable/swipe_to_btn"
-            android:padding="10dp"
-            android:rotation="180"
-            android:src="@mipmap/right_arrow"
-            app:tint="@color/white" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -104,6 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:orientation="vertical"
                         android:padding="10dp">
 

@@ -12,9 +12,9 @@ import com.emotaxi.model.TokenModel
 import com.emotaxi.retrofit.BackEndApi
 import com.emotaxi.retrofit.Constant
 import com.emotaxi.retrofit.WebServiceClient
-import com.emotaxi.utils.SessionManager
 import com.emotaxi.widget.CustomDialogProgress
 import com.emotaxi.widget.DataManager
+import com.emotaxi.widget.SessionManager
 import kotlinx.android.synthetic.main.activity_add_card.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,9 +33,9 @@ class AddCardActivity : AppCompatActivity() {
 
         tv_save.setOnClickListener {
             when {
-                input_name!!.text!!.toString().isEmpty() -> {
-                    input_name.error = "Please enter your name"
-                }
+//                input_name!!.text!!.toString().isEmpty() -> {
+//                    input_name.error = "Please enter your name"
+//                }
                /* input_phone!!.text!!.toString().isEmpty() -> {
                     input_phone.error = "Please enter your phone number"
                 }*/
@@ -82,6 +82,7 @@ class AddCardActivity : AppCompatActivity() {
                     call: Call<TokenModel>,
                     response: Response<TokenModel>
                 ) {
+                    Toast.makeText(this@AddCardActivity,"Generate token" + response.body(), Toast.LENGTH_SHORT).show()
                     if (response.code() == 200) {
                         if (response!!.body()!!.status == 1) {
                             if (SessionManager.readString(
@@ -108,6 +109,7 @@ class AddCardActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<TokenModel>, t: Throwable) {
                     Log.e("TAG value", t.message!!)
+                    Toast.makeText(this@AddCardActivity,"Generate token Errore" + t.message, Toast.LENGTH_SHORT).show()
                     alert(t.message.toString())
                     customDialogProgress?.dismiss()
                 }
@@ -125,12 +127,14 @@ class AddCardActivity : AppCompatActivity() {
         WebServiceClient.client1.create(BackEndApi::class.java)
             .createCustomer(hashmapheader, hashmap).enqueue(object : Callback<CreateCustomer> {
                 override fun onFailure(call: Call<CreateCustomer>, t: Throwable) {
+                    Toast.makeText(this@AddCardActivity,"Create Customer On Stripe Errore" + t.message, Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(
                     call: Call<CreateCustomer>,
                     response: Response<CreateCustomer>
                 ) {
+                    Toast.makeText(this@AddCardActivity,"Create Customer On Stripe" + response.body(), Toast.LENGTH_SHORT).show()
                     if (response.body()?.data != null) {
                     //    customDialogProgress!!.dismiss()
                         SessionManager.writeString(
@@ -163,12 +167,14 @@ class AddCardActivity : AppCompatActivity() {
             .addcard(hashmapheader, hashmap).enqueue(object : Callback<AddCardModel> {
                 override fun onFailure(call: Call<AddCardModel>, t: Throwable) {
                     customDialogProgress?.dismiss()
+                    Toast.makeText(this@AddCardActivity,"Add Card On Stripe Errore" + t.message, Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(
                     call: Call<AddCardModel>,
                     response: Response<AddCardModel>
                 ) {
+                    Toast.makeText(this@AddCardActivity,"Add Card On Stripe" + response.body(), Toast.LENGTH_SHORT).show()
                     if (response.body()?.data != null) {
                         customDialogProgress?.dismiss()
                         finish()

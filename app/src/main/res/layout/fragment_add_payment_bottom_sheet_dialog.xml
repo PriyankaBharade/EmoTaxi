@@ -10,7 +10,8 @@
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:visibility="gone"
+        android:layout_centerInParent="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,17 +28,6 @@
                 android:padding="10dp"
                 android:text="@string/ton_taxi_payment_method"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tv_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:fontFamily="sans-serif-black"
-                android:padding="10dp"
-                android:text="Cancel"
-                android:textColor="@color/colorBlue"
                 android:textSize="16sp" />
         </RelativeLayout>
 
@@ -63,25 +53,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             android:background="@color/grey" />
 
         <TextView
             android:id="@+id/tv_add_new"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawableRight="@drawable/ic_baseline_chevron_right_24"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Add a new card"
+            android:text="@string/add_a_new_card"
+            android:visibility="gone"
             android:textColor="@color/black"
+            android:textSize="16sp"
+            app:drawableEndCompat="@drawable/ic_baseline_chevron_right_24" />
+
+
+        <TextView
+            android:id="@+id/tv_booking_without_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:background="@drawable/swipe_to_btn"
+            android:padding="10dp"
+            android:text="@string/i_don_t_have_a_card_right_now_pay_the_regular_taxi_fair_in_the_cab"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="visible"
+            app:drawableEndCompat="@drawable/ic_baseline_chevron_right_24" />
+
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:fontFamily="sans-serif-black"
+            android:padding="10dp"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="@color/colorBlue"
             android:textSize="16sp" />
     </LinearLayout>
+
+
 </RelativeLayout>

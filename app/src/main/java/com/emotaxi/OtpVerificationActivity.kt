@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import com.emotaxi.model.SignUpModel
 import com.emotaxi.model.TokenModel
@@ -24,17 +25,21 @@ import retrofit2.Response
 class OtpVerificationActivity : AppCompatActivity() {
     var user_id  = ""
     var  callBackFrom = ""
+    var mobileNumber = "";
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otp_verification)
         user_id = intent.getStringExtra("user_id").toString()
+        mobileNumber = intent.getStringExtra("mobileNumber").toString()
         callBackFrom = intent.getStringExtra(Constant.CallbackFrom).toString()
+        var input_mobile : EditText = findViewById(R.id.input_mobile)
+        input_mobile.setText(mobileNumber)
         btn_verify.setOnClickListener {
-            if (squareField.text!!.isNotEmpty()) {
+          //  if (squareField.text!!.isNotEmpty()) {
                 otpApiCall()
-            } else {
-                Snackbar.make(main_otp_view, "Enter Valid Otp", Snackbar.LENGTH_SHORT).show()
-            }
+           // } else {
+             //   Snackbar.make(main_otp_view, "Enter Valid Otp", Snackbar.LENGTH_SHORT).show()
+           // }
         }
     }
 
@@ -43,7 +48,8 @@ class OtpVerificationActivity : AppCompatActivity() {
         var customDialogProgress = CustomDialogProgress(this)
         customDialogProgress?.show()
         var hashMap = HashMap<String, String>()
-        hashMap["otp"] = squareField.text.toString()
+       // hashMap["otp"] = squareField.text.toString()
+        hashMap["otp"] = "1234"
         hashMap["user_id"] = user_id
         var hashmapheader = HashMap<String, String>()
         hashmapheader["version"] = "1"

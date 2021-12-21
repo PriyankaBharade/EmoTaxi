@@ -2,6 +2,7 @@ package com.emotaxi
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,8 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.HashMap
 
 class SignUpActivity : AppCompatActivity(),
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -31,6 +34,14 @@ class SignUpActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+
+        val locale = Locale("fr")
+        Locale.setDefault(locale)
+        val configuration: Configuration = resources.configuration
+        configuration.setLocale(locale)
+        configuration.setLayoutDirection(locale)
+        createConfigurationContext(configuration)
+
         callBackFrom = intent.getStringExtra(Constant.CallbackFrom).toString()
         mCredentialsApiClient = GoogleApiClient.Builder(this)
             .addConnectionCallbacks(this)
@@ -56,7 +67,7 @@ class SignUpActivity : AppCompatActivity(),
             if (input_mobile.text.length >= 10){
                 signUpApiCall()
             }else{
-                Snackbar.make(mainView,"Enter valid mobile number",Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(mainView, "Enter valid mobile number", Snackbar.LENGTH_SHORT).show()
             }
         }
 
@@ -65,35 +76,53 @@ class SignUpActivity : AppCompatActivity(),
     private fun signUpApiCall(){
        var customDialogProgress = CustomDialogProgress(this)
         customDialogProgress?.show()
-        var hashMap = HashMap<String,String>()
-        hashMap.put("mobile_no",input_mobile.text.toString())
+        var hashMap = HashMap<String, String>()
+        hashMap.put("mobile_no", input_mobile.text.toString())
         var hashmapheader = HashMap<String, String>()
         hashmapheader["version"] = "1"
         hashmapheader["device_type"] = "android"
-        WebServiceClient.client1.create(BackEndApi::class.java).signUpApi(hashmapheader,hashMap)
-            .enqueue(object : Callback<SignUpModel>{
+        WebServiceClient.client1.create(BackEndApi::class.java).signUpApi(hashmapheader, hashMap)
+            .enqueue(object : Callback<SignUpModel> {
                 override fun onFailure(call: Call<SignUpModel>, t: Throwable) {
-                    Log.e("Response" , t.message.toString())
+                    Log.e("Response", t.message.toString())
                     customDialogProgress?.dismiss()
                 }
 
                 override fun onResponse(call: Call<SignUpModel>, response: Response<SignUpModel>) {
                     customDialogProgress?.dismiss()
-                    if (response.code() == 200){
-                        if(response.body()?.data!=null
+                    if (response.code() == 200) {
+                        if (response.body()?.data != null
                             && response.body()?.data!![0].userId != null
-                            && response.body()?.data!![0].userId.isNotEmpty()){
-                            Snackbar.make(mainView,response.body()?.message.toString(),Snackbar.LENGTH_SHORT).show()
-                            startActivity(Intent(this@SignUpActivity,
-                                OtpVerificationActivity::class.java)
-                                .putExtra("user_id", response.body()?.data!![0].userId)
-                                .putExtra(Constant.CallbackFrom,callBackFrom))
-                                 finish()
-                        }else{
-                            Snackbar.make(mainView,response.body()?.message.toString(),Snackbar.LENGTH_SHORT).show()
+                            && response.body()?.data!![0].userId.isNotEmpty()
+                        ) {
+                            Snackbar.make(
+                                mainView,
+                                response.body()?.message.toString(),
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                            startActivity(
+                                Intent(
+                                    this@SignUpActivity,
+                                    OtpVerificationActivity::class.java
+                                )
+                                    .putExtra("user_id", response.body()?.data!![0].userId)
+                                    .putExtra("mobileNumber", input_mobile.text.toString())
+                                    .putExtra(Constant.CallbackFrom, callBackFrom)
+                            )
+                            finish()
+                        } else {
+                            Snackbar.make(
+                                mainView,
+                                response.body()?.message.toString(),
+                                Snackbar.LENGTH_SHORT
+                            ).show()
                         }
-                    }else{
-                        Snackbar.make(mainView,response.body()?.message.toString(),Snackbar.LENGTH_SHORT).show()
+                    } else {
+                        Snackbar.make(
+                            mainView,
+                            response.body()?.message.toString(),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                     }
                 }
 

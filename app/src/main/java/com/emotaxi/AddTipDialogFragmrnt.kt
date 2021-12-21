@@ -11,8 +11,8 @@ import com.emotaxi.model.CardListModel
 import com.emotaxi.retrofit.BackEndApi
 import com.emotaxi.retrofit.Constant
 import com.emotaxi.retrofit.WebServiceClient
-import com.emotaxi.utils.SessionManager
 import com.emotaxi.widget.DataManager
+import com.emotaxi.widget.SessionManager
 import kotlinx.android.synthetic.main.fragment_add_tip_dialog_fragmrnt.*
 import retrofit2.Call
 import retrofit2.Callback

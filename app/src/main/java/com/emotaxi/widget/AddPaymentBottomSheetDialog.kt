@@ -24,7 +24,6 @@ import com.emotaxi.model.CardListModel
 import com.emotaxi.retrofit.BackEndApi
 import com.emotaxi.retrofit.Constant
 import com.emotaxi.retrofit.WebServiceClient
-import com.emotaxi.utils.SessionManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -109,6 +108,10 @@ class AddPaymentBottomSheetDialog : BottomSheetDialogFragment(),
             startActivity(Intent(requireContext(), AddCardActivity::class.java))
         }
 
+        tv_booking_without_card.setOnClickListener {
+            course("")
+        }
+
         /*if (DataManager.dataManager!=null &&
             DataManager.dataManager.getSignUpModel(requireActivity())!=null &&
             DataManager.dataManager.getSignUpModel(requireActivity()).data[0] != null
@@ -160,10 +163,10 @@ class AddPaymentBottomSheetDialog : BottomSheetDialogFragment(),
                             )
                             rv_card!!.adapter = cardListAdapter
                         } else {
-                            tv_no_record.visibility = View.VISIBLE
+                            tv_no_record.visibility = View.GONE
                         }
                     } else {
-                        tv_no_record.visibility = View.VISIBLE
+                        tv_no_record.visibility = View.GONE
                         Toast.makeText(
                             requireContext(), response.body()?.message,
                             Toast.LENGTH_SHORT
@@ -535,8 +538,8 @@ class AddPaymentBottomSheetDialog : BottomSheetDialogFragment(),
             )
             startActivity(
                 Intent(requireActivity(), BookingDetailsActivity::class.java)
-                    .putExtra("latitude", latitude?.toDouble()!!)
-                    .putExtra("longitude", longitude?.toDouble()!!)
+                    .putExtra("latitude", latitude)
+                    .putExtra("longitude", longitude)
                     .putExtra("price", price)
                     .putExtra(
                         "email",

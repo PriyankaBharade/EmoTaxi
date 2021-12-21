@@ -15,7 +15,6 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.se.omapi.Session
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.*
@@ -28,7 +27,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
-import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
 import com.emotaxi.drawPath.DownloadTask
@@ -37,9 +35,9 @@ import com.emotaxi.retrofit.BackEndApi
 import com.emotaxi.retrofit.Constant
 import com.emotaxi.retrofit.SetonGoogleDistanceListener
 import com.emotaxi.retrofit.WebServiceClient
-import com.emotaxi.utils.SessionManager
 import com.emotaxi.widget.CustomDialogProgress
 import com.emotaxi.widget.DataManager
+import com.emotaxi.widget.SessionManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
@@ -115,11 +113,26 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
     var addressformated1: String = ""
     var houseNumber: String = ""
     var context: Context? = null
-    var mapFragment : SupportMapFragment?= null
+    var mapFragment: SupportMapFragment? = null
+    var carReachtime = "";
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+      /*  val config = resources.configuration
+        val lang = SessionManager.readString(this,Constant.language,"")
+        val locale = Locale(lang)
+        Locale.setDefault(locale)
+        config.setLocale(locale)
+        createConfigurationContext(config)
+        resources.updateConfiguration(config, resources.displayMetrics)*/
+     /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+            config.setLocale(locale)
+        else
+            config.locale = locale
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            createConfigurationContext(config)
+        resources.updateConfiguration(config, resources.displayMetrics)*/
         setContentView(R.layout.activity_main)
         tv_goto = findViewById(R.id.tv_goto)
         input_current = findViewById(R.id.input_current)
@@ -147,6 +160,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
         var imgCircular: CircleImageView = navView.findViewById(R.id.imgCircular)
         var tv_name: TextView = navView.findViewById(R.id.tv_name)
         var tv_email: TextView = navView.findViewById(R.id.tv_email)
+
         if (DataManager.dataManager.getGetProfileModel(this) != null &&
             !DataManager.dataManager.getGetProfileModel(this).equals("")
         ) {
@@ -164,35 +178,25 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
          val formatted = current.format(formatter)
          var newdate = SimpleDateFormat("YYYY/mm/dd HH:mm:ss")
          tv_time!!.text = newdate.format(formatted.parse(current))*/
-        Log.e("TAG Booking ID" , "" + SessionManager.readString(this, Constant.booking_id,""))
+        Log.e("TAG Booking ID", "" + SessionManager.readString(this, Constant.booking_id, ""))
         image_privacy.setOnClickListener {
             val url = "https://www.emo.taxi/privacy-policy/"
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
         }
-        direction_floating.setOnClickListener {
-            /*  SessionManager.writeString(this,Constant.Price, price.toString())
-              SessionManager.writeString(this,Constant.PickUpLatitude,latitude.toString())
-              SessionManager.writeString(this,Constant.PickUpLongitude,longitude.toString())*/
-            startActivity(
+        direction_floating_card.setOnClickListener {
+         Toast.makeText(this, latitude.toString() + " " + longitude.toString(),Toast.LENGTH_SHORT).show()
+         startActivity(
                 Intent(this, BookingDetailsActivity::class.java)
-                    .putExtra(
-                        "latitude",
-                        SessionManager.readString(
-                            this,
-                            Constant.PickUpLatitude,
-                            latitude.toString()
-                        )
-                    )
-                    .putExtra(
-                        "longitude",
-                        SessionManager.readString(
-                            this,
-                            Constant.PickUpLatitude,
-                            latitude.toString()
-                        )
-                    )
+                    .putExtra("latitude",SessionManager.readString(
+                        this,
+                        Constant.PickUpLatitude,
+                        latitude.toString()))
+                    .putExtra("longitude", SessionManager.readString(
+                        this,
+                        Constant.PickUpLongitude,
+                        latitude.toString()))
                     .putExtra(
                         "price",
                         SessionManager.readString(
@@ -201,16 +205,15 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
                             latitude.toString()
                         )
                     )
-                    /*  .putExtra("email", input_email!!.text!!.toString())*/
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             )
         }
         if (SessionManager.readString(this, Constant.booking_id, "") != null
             && SessionManager.readString(this, Constant.booking_id, "").toString().isNotEmpty()
         ) {
-            direction_floating.visibility = View.VISIBLE
+            direction_floating_card.visibility = View.VISIBLE
         } else {
-            direction_floating.visibility = View.GONE
+            direction_floating_card.visibility = View.GONE
         }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -540,9 +543,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
                         if (response?.body()?.vehicles?.size!! > 0) {
                             addMarkers(response?.body()?.vehicles!!)
                             vehiclelongitude =
-                                response?.body()?.vehicles!!.get(0).longitude
+                                response?.body()?.vehicles!![0].longitude
                             vehiclelatitude =
-                                response?.body()?.vehicles!!.get(0).latitude
+                                response?.body()?.vehicles!![0].latitude
                             drawPath(
                                 getURL(
                                     LatLng(currentlatitude, currentlongitude),
@@ -582,12 +585,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
         return "https://maps.googleapis.com/maps/api/directions/json?$params\$&key" + "=AIzaSyAA11xopQ1pUTPpZdRnRnQD8mEWvWlSQSI"
     }
 
-
     private fun drawPath(url: String) {
         val downloadTask = DownloadTask(mMap, this)
         downloadTask.execute(url)
     }
-
 
     /* fun getNetworkApp() {
          customDialogProgress = CustomDialogProgress(this)
@@ -675,14 +676,15 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
                     longitude = location.longitude
                     latitude = location.latitude
                     getAddress(latitude, longitude)
-
                 } else {
                     var alert = AlertDialog.Builder(this)
                     alert.setMessage("Please go to the setting screen and turn on your location first")
-                    alert.setPositiveButton("Okay" , DialogInterface.OnClickListener { dialog, which ->
-                        startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-                        dialog.dismiss()
-                    })
+                    alert.setPositiveButton(
+                        "Okay",
+                        DialogInterface.OnClickListener { dialog, which ->
+                            startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                            dialog.dismiss()
+                        })
                     alert.show()
                 }
             }
@@ -747,9 +749,23 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
                         )
                     )
                 mMap!!.addMarker(valueMap1)
-
             } else {
+                Log.e("Input Destination", address)
                 input_destination?.text = address
+                checked = true
+                startActivity(
+                    Intent(this@MainActivity, ConfirmActivity::class.java)
+                        .putExtra("longitude", longitude.toString())
+                        .putExtra("latitude", latitude.toString())
+                        .putExtra("dlongitude", dlongitude.toString())
+                        .putExtra("dlatitude", dlatitude.toString())
+                        .putExtra("carReachtime",carReachtime)
+                        .putExtra("sourceAddress", input_current?.text?.toString())
+                        .putExtra(
+                            "destinationAddress",
+                            input_destination?.text?.toString()
+                        )
+                )
             }
         } catch (e: Exception) {
             Log.e("TAG Errore", e.message.toString())
@@ -795,7 +811,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
     }
 
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             when (resultCode) {
@@ -810,6 +825,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
                             getAddress(latitude, longitude)
                             //onSourcePincallbackClick(latitude, longitude)
                         } else {
+                          //  checked = true
                             input_destination?.text = place.address
                             dlatitude = place.latLng!!.latitude!!
                             dlongitude = place.latLng!!.longitude!!
@@ -821,7 +837,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
                                  )  .putExtra("latitude",latitude?.toDouble()!!)
                                      .putExtra("longitude", longitude?.toDouble()!!)
                              )*/
-                            startActivity(
+                           /* startActivity(
                                 Intent(this@MainActivity, ConfirmActivity::class.java)
                                     .putExtra("longitude", longitude.toString())
                                     .putExtra("latitude", latitude.toString())
@@ -832,7 +848,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
                                         "destinationAddress",
                                         input_destination?.text?.toString()
                                     )
-                            )
+                            )*/
                             // onDestnationCallback(latitude, longitude)
                         }
                     }
@@ -925,7 +941,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
             getAddress(latitude, longitude)
         }
     }
-
 
     /*  fun onSourcePincallbackClick(lat: Double, log: Double) {
           if (ActivityCompat.checkSelfPermission(
@@ -1093,7 +1108,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
         return true
     }
 
-
     override fun onRestart() {
         super.onRestart()
         input_destination!!.text = ""
@@ -1141,8 +1155,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
     }
 
     override fun onGoogleResponseListener(distance: String, time: String) {
-        Log.e("TAG Time", time)
         if (time != null && time != "") {
+            carReachtime = time
             var valueMap1 =
                 MarkerOptions().position(LatLng(currentlatitude, currentlongitude)).icon(
                     BitmapDescriptorFactory.fromBitmap(
@@ -1159,13 +1173,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, DatePickerDialog.O
     }
 
     private fun updateLocalization() {
-        Log.e("SelectedLanguage", "" + SessionManager.readString(this, Constant.language, ""))
+      //  Toast.makeText(this,"Language is... " + SessionManager.readString(applicationContext, Constant.language, ""),Toast.LENGTH_SHORT).show()
+       // Log.e("SelectedLanguage", "" + SessionManager.readString(this, Constant.language, ""))
         val config = resources.configuration
-        val locale = Locale(SessionManager.readString(this, Constant.language, ""))
+       // val locale = Locale(SessionManager.readString(this, Constant.language, ""))
+        val locale = Locale("Fr")
         Locale.setDefault(locale)
         config.locale = locale
         resources.updateConfiguration(config, resources.displayMetrics)
     }
-
 }
 

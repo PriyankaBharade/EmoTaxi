@@ -23,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:background="@drawable/green_round_shape"
                 android:orientation="vertical"
                 android:padding="10dp">
@@ -31,18 +32,28 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:gravity="center_horizontal"
+                    android:visibility="gone"
                     android:src="@mipmap/car_new"/>
 
                 <TextView
                     android:id="@+id/tv_arrive_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-black"
                     android:gravity="center_horizontal"
-                    android:text="10"
-                    android:visibility="gone"
+                    android:fontFamily="sans-serif-black"
+                    android:text="11"
+                    android:visibility="visible"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Destination"
+                    android:visibility="visible"
+                    android:textColor="@color/white"
+                    android:textSize="11sp" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -5,9 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
-import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -21,6 +19,16 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        if (SessionManager.readString(
+                this,
+                Constant.language,
+                ""
+            ) == "en"
+        ) {
+            SessionManager.writeString(this, Constant.language, "en")
+        } else {
+            SessionManager.writeString(this, Constant.language, "fr")
+        }
 
         /* val crashButton = Button(this)
          crashButton.text = "Crash!"
@@ -46,8 +54,8 @@ class SplashActivity : AppCompatActivity() {
 
     private fun intentStart() {
         Handler().postDelayed({
-            if (DataManager.dataManager!=null &&
-                DataManager.dataManager.getSignUpModel(this)!=null &&
+            if (DataManager.dataManager != null &&
+                DataManager.dataManager.getSignUpModel(this) != null &&
                 DataManager.dataManager.getSignUpModel(this).data != null
                 && DataManager.dataManager.getSignUpModel(this).data[0].userId != null
                 && DataManager.dataManager.getSignUpModel(this).data[0].userId.isNotEmpty()
@@ -55,8 +63,15 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
-                startActivity(Intent(this, GetStartedActivity::class.java)
-                    .putExtra(Constant.CallbackFrom,Constant.Splash))
+                SessionManager.writeString(
+                    this,
+                    Constant.booking_id,
+                    ""
+                )
+                startActivity(
+                    Intent(this, GetStartedActivity::class.java)
+                        .putExtra(Constant.CallbackFrom, Constant.Splash)
+                )
                 finish()
             }
 

@@ -22,13 +22,12 @@ import com.emotaxi.model.*
 import com.emotaxi.retrofit.BackEndApi
 import com.emotaxi.retrofit.Constant
 import com.emotaxi.retrofit.WebServiceClient
-import com.emotaxi.utils.SessionManager
 import com.emotaxi.widget.CustomDialogProgress
 import com.emotaxi.widget.DataManager
+import com.emotaxi.widget.SessionManager
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.stripe.android.Stripe
 import kotlinx.android.synthetic.main.fragment_payment_dialog.*
 import org.json.JSONObject
 import retrofit2.Call

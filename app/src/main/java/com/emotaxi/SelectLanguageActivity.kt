@@ -65,7 +65,7 @@ class SelectLanguageActivity : AppCompatActivity() {
     private fun updateLocalization() {
         val config = resources.configuration
         val locale =
-            Locale(com.emotaxi.utils.SessionManager.readString(this, Constant.language, ""))
+            Locale(SessionManager.readString(this, Constant.language, ""))
         Locale.setDefault(locale)
         config.locale = locale
         resources.updateConfiguration(config, resources.displayMetrics)

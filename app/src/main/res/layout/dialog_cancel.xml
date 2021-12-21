@@ -33,6 +33,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="12dp"
                 android:paddingBottom="10dp"
+                android:visibility="gone"
                 android:text="@string/_5_fee_will_still_be_applied"
                 android:textColor="@color/black"
                 android:textSize="14sp" />

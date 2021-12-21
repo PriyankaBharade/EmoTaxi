@@ -10,8 +10,7 @@ class SessionManager {
 
 
         fun writeString(context: Context, key: String, value: String) {
-            getEditor(context).putString(key, value).commit()
-        }
+            getEditor(context).putString(key, value).commit()        }
 
 
         fun readString(context: Context, key: String, defValue: String): String? {

@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Ton Taxi</string>
-    <string name="hi_where_you_would_like_to_go">Hi where you would like to go?</string>
+  <!--  <string name="hi_where_you_would_like_to_go">Hi where you would like to go?</string>-->
+    <string name="hi_where_you_would_like_to_go">Salut où aimeriez vous aller?</string>
     <string name="current_location">Current Location</string>
-    <string name="enter_your_destination">Enter Your Destination?</string>
+   <!-- <string name="enter_your_destination">Enter Your Destination?</string>-->
+    <string name="enter_your_destination">Entrer Votre Destination?</string>
     <!-- <string name="google_maps_key">AIzaSyCfV7zub8qagNNZP5w9Z0cRwbMQ0lwtLC4</string>-->
     <!--<string name="google_maps_key">AIzaSyBnxRQZIShGJea9q8__HI_tak2ptkRm1cA</string>-->
     <!--<string name="google_maps_key">AIzaSyAURCg2uDpk8BsnlYziw9ix_sfFMLRJ_Gg</string>-->
@@ -38,17 +40,27 @@
     <string name="reset">Stop Tracking</string>
     <string name="are_you_sure">Are you sure you want to cancel?</string>
     <string name="_5_fee_will_still_be_applied">5$ fee will still be applied</string>
-    <string name="hey_cancel_is_only_available_n_before_your_ride_arrive">Hey Cancel is only available \n before your ride arrive.</string>
+   <!-- <string name="hey_cancel_is_only_available_n_before_your_ride_arrive">We are curre confirming your call with the closest vehicle. Contact us if we are in period of lot s demand</string>-->
+<!--    <string name="hey_cancel_is_only_available_n_before_your_ride_arrive">Nous confirmons I appel avec la voiture la plus pret de vous. Contactez nous pour voir votre priorite d"'appel en cas de grand achalandage appelle nous</string>-->
+
+    <string name="hey_cancel_is_only_available_n_before_your_ride_arrive">Nous confirmons votre appel avec la voiture la lus pret devous. En cas de grand achalandage appelle nous pour voir votre prorite d"'appel</string>
+
+    <string name="your_vehicle_is_on_way">Your vehicle is on his way, keep on eye on it.</string>
     <string name="email_address">Email Address</string>
     <string name="english">English</string>
     <string name="french">French</string>
-    <string name="privacy_policy">Privacy Policy</string>
+ <!--   <string name="privacy_policy">Privacy Policy</string>-->
+    <string name="privacy_policy">politique de confidentialité</string>
     <string name="average_price">Average Price</string>
     <string name="your_emo_price">Your Emo Price</string>
     <string name="swipe_to_confirm">Swipe to confirm</string>
+   <!-- <string name="confirm">Confirm</string>-->
+    <string name="confirm">Confirmer</string>
     <string name="mobile_number">Mobile Number</string>
-    <string name="signup">SignUp</string>
-    <string name="skip">SKIP</string>
+  <!--  <string name="signup">SignUp</string>-->
+    <string name="signup">Commencer</string>
+    <!--   <string name="skip">SKIP</string>-->
+    <string name="skip">Commenrce reservation</string>
     <string name="verify_otp">Verify Otp</string>
     <string name="expirationn_date">Expirationn Date</string>
     <string name="_5">5 $</string>
@@ -57,14 +69,23 @@
     <string name="_20">20 $</string>
     <string name="yes">Yes</string>
     <string name="get_started">Get Started</string>
-    <string name="welcome_to_emotaxi">Welcome To EmoTaxi</string>
-    <string name="enter_your_phone_number_to_start_booking_with_us">Enter your phone number to start booking with us</string>
+    <string name="welcome_to_emotaxi">Bienvenue a Ton Taxi</string>
+   <!-- <string name="welcome_to_emotaxi">Welcome To TonTaxi</string>-->
+    <!--<string name="enter_your_phone_number_to_start_booking_with_us">Enter your phone number to start booking with us</string>-->
+    <string name="enter_your_phone_number_to_start_booking_with_us">Confirme votre numero de telephone pour commencer a faire vos reservations</string>
     <string name="a_sms_will_be_sent_to_validate_your_phone_number">A SMS will be sent to validate your phone number</string>
     <string name="ton_taxi_payment_method">Ton Taxi Payment Method</string>
-    <string name="no_record_found">No record found</string>
+    <string name="no_record_found">No card saved yet</string>
     <string name="pay">Pay</string>
-    <string name="business_account">Register Your Account</string>
+   <!-- <string name="business_account">Register Your Account</string>-->
+    <string name="business_account">Compte d’entreprise</string>
     <string name="select_language">Select Language</string>
+    <string name="add_a_new_card">Add a new card</string>
+    <string name="i_don_t_have_a_card_right_now_pay_the_regular_taxi_fair_in_the_cab">I don\'t have a card right now pay the regular taxi fair in the cab!</string>
+    <string name="follow_your_tracking">Follow your tracking</string>
+    <string name="card_information">CARD INFORMATION</string>
+    <string name="e_mail_for_receipt">E-MAIL FOR RECEIPT</string>
+    <string name="appeller_nous_pour_plus_d_aide">Appeller nous pour plus d\'aide</string>
 
 
 </resources>

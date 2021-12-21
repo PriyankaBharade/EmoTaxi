@@ -61,7 +61,12 @@ class ProfileActivity : AppCompatActivity() {
             getImageFromSelection()
         }
         btn_update.setOnClickListener {
-            updateProfile()
+            if (DataManager.dataManager.signUpModel != null) {
+                updateProfile()
+            } else {
+                Toast.makeText(this,"Please register first with mobile",Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         if (DataManager.dataManager.getSignUpModel(this) != null) {
@@ -232,11 +237,14 @@ class ProfileActivity : AppCompatActivity() {
                     customDialogProgress?.dismiss()
                 }
 
-                override fun onResponse(call: Call<GetProfileModel>, response: Response<GetProfileModel>) {
+                override fun onResponse(
+                    call: Call<GetProfileModel>,
+                    response: Response<GetProfileModel>
+                ) {
                     Log.e("Response", response.message())
                     customDialogProgress?.dismiss()
-                    var dataJson : String = Gson().toJson(response!!.body())
-                    SessionManager.writeString(this@ProfileActivity,Constant.ProfileData,dataJson)
+                    var dataJson: String = Gson().toJson(response!!.body())
+                    SessionManager.writeString(this@ProfileActivity, Constant.ProfileData, dataJson)
                     setDataOnViews(response.body())
 
                 }
@@ -245,7 +253,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setDataOnViews(body: GetProfileModel?) {
-        if(body!=null){
+        if (body != null) {
             Glide.with(this).load(body!!.data[0].profileImage).into(profileImage)
             input_name.setText(body!!.data[0].username)
             input_phone.setText(body!!.data[0].mobileNo)
@@ -259,13 +267,16 @@ class ProfileActivity : AppCompatActivity() {
         var partimage: MultipartBody.Part =
             BackEndApi.prepareFilePart(getApplication(), "profile_image", Path);
         val mediaType = (MediaType.parse("text/plain"))
-        var user_id_re: RequestBody = RequestBody.create(mediaType, DataManager.dataManager.getSignUpModel(this).data[0].userId)
+        var user_id_re: RequestBody = RequestBody.create(
+            mediaType,
+            DataManager.dataManager.getSignUpModel(this).data[0].userId
+        )
         var full_name_re: RequestBody = RequestBody.create(mediaType, input_name.text.toString())
         var email_re: RequestBody = RequestBody.create(mediaType, input_email.text.toString())
         var version: RequestBody = RequestBody.create(mediaType, "1")
         var device_type: RequestBody = RequestBody.create(mediaType, "android")
         WebServiceClient?.client1?.create(BackEndApi::class.java)
-            .profileUpdate(partimage, user_id_re!!, full_name_re, email_re, version,device_type)
+            .profileUpdate(partimage, user_id_re!!, full_name_re, email_re, version, device_type)
             .enqueue(object : Callback<TokenModel> {
                 override fun onFailure(call: Call<TokenModel>?, t: Throwable?) {
                     customDialogProgress.dismiss()
